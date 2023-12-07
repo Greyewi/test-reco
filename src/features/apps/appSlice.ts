@@ -27,16 +27,18 @@ export interface AppsData {
   appRows: AppRow[];
 }
 
-interface AppsSlice {
+export interface AppsSlice {
   appRows: AppRow[] | null,
-  status: "idle" | "loading" | "failed"
+  appListStatus: "idle" | "loading" | "failed"
+  appOverviewUserListStatus: "idle" | "loading" | "failed"
   activeApp: AppRow | null
   appUsers: string[] | null
 }
 
 const initialState: AppsSlice = {
   appRows: null,
-  status: "idle",
+  appListStatus: "idle",
+  appOverviewUserListStatus: "idle",
   activeApp: null,
   appUsers: null
 }
@@ -49,7 +51,7 @@ export const getAppList = createAsyncThunk(
 )
 
 export const getAppOverviewUserList = createAsyncThunk(
-  "apps/fetchApps",
+  "apps/fetchAppOverviewUsers",
   async ({pageNumber, pageSize}: FetchAppsArgs) => {
     return await fetchAppOverviewUsers(pageNumber, pageSize)
   },
@@ -62,24 +64,24 @@ export const appsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAppList.pending, (state) => {
-        state.status = "loading"
+        state.appListStatus = "loading"
       })
       .addCase(getAppList.fulfilled, (state, action) => {
-        state.status = "idle"
+        state.appListStatus = "idle"
         state.appRows = action.payload.appRows
       })
       .addCase(getAppList.rejected, (state) => {
-        state.status = "failed"
+        state.appListStatus = "failed"
       })
       .addCase(getAppOverviewUserList.pending, (state) => {
-        state.status = "loading"
+        state.appOverviewUserListStatus = "loading"
       })
       .addCase(getAppOverviewUserList.fulfilled, (state, action) => {
-        state.status = "idle"
+        state.appOverviewUserListStatus = "idle"
         state.appUsers = action.payload.appUsers
       })
       .addCase(getAppOverviewUserList.rejected, (state) => {
-        state.status = "failed"
+        state.appOverviewUserListStatus = "failed"
       })
   },
 })
@@ -87,6 +89,7 @@ export const appsSlice = createSlice({
 export const selectAppRows = (state: RootState) => state.apps.appRows
 export const selectActiveApp = (state: RootState) => state.apps.activeApp
 export const selectActiveAppUserList = (state: RootState) => state.apps.appUsers
-export const selectStatus = (state: RootState) => state.apps.status
+export const selectAppStatus = (state: RootState) => state.apps.appListStatus
+export const selectUserListStatus = (state: RootState) => state.apps.appOverviewUserListStatus
 
 export default appsSlice.reducer

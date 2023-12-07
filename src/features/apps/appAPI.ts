@@ -1,21 +1,28 @@
 import axios, {AxiosResponse} from "axios";
 import {AppsData, AppUsers} from './appSlice'
 
-const BASE_URL = 'https://79c8-37-214-70-154.ngrok-free.app/api/v1/app-service'
+//const BASE_URL = '/api/v1/app-service'
 
 export const fetchApps = async (pageNumber: number, pageSize: number) => {
-  const response: AxiosResponse<AppsData> = await axios.put(`${BASE_URL}/get-apps`, {
+  const response: AxiosResponse<AppsData> = await axios.put('/api/v1/app-service/get-apps', {
     pageNumber,
     pageSize
+  }, {
+    headers: {
+      'ngrok-skip-browser-warning': '69420'
+    }
   });
   return response.data;
 }
 
 export const fetchAppOverviewUsers = async (pageNumber: number, pageSize: number) => {
-  const response: AxiosResponse<AppUsers> = await axios.get(`${BASE_URL}/get-app-overview-users/airbnb.com`, {
+  const response: AxiosResponse<AppUsers> = await axios.get('/api/v1/app-service/get-apps', {
     params: {
       pageNumber,
       pageSize
+    },
+    headers: {
+      'ngrok-skip-browser-warning': '69420'
     }
   });
   return response.data;
