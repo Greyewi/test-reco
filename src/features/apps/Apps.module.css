@@ -1,0 +1,13 @@
+.table_container {
+    display: grid;
+    grid-template-columns: 30% 30% 40%;
+    overflow-y: auto;
+}
+
+.table_line {
+
+}
+
+.table_cell {
+
+}

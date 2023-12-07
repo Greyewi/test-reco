@@ -7,7 +7,13 @@ type FetchAppsArgs = {
   pageSize: number;
 };
 
-interface AppRow {
+type FetchUserAppsArgs = {
+  pageNumber: number;
+  pageSize: number;
+  appId: string
+};
+
+export interface AppRow {
   appId: string;
   appName: string;
   appSources: AppSource[];
@@ -52,8 +58,8 @@ export const getAppList = createAsyncThunk(
 
 export const getAppOverviewUserList = createAsyncThunk(
   "apps/fetchAppOverviewUsers",
-  async ({pageNumber, pageSize}: FetchAppsArgs) => {
-    return await fetchAppOverviewUsers(pageNumber, pageSize)
+  async ({pageNumber, pageSize, appId}: FetchUserAppsArgs) => {
+    return await fetchAppOverviewUsers(pageNumber, pageSize, appId)
   },
 )
 

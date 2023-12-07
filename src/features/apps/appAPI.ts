@@ -15,8 +15,8 @@ export const fetchApps = async (pageNumber: number, pageSize: number) => {
   return response.data;
 }
 
-export const fetchAppOverviewUsers = async (pageNumber: number, pageSize: number) => {
-  const response: AxiosResponse<AppUsers> = await axios.get('/api/v1/app-service/get-apps', {
+export const fetchAppOverviewUsers = async (pageNumber: number, pageSize: number, appId: string) => {
+  const response: AxiosResponse<AppUsers> = await axios.get('/api/v1/app-service/get-app-overview-users/' + appId, {
     params: {
       pageNumber,
       pageSize
